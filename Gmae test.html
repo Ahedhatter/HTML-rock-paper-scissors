@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rock Paper Scissors</title>
+    <style>
+
+        body {
+            font-family: Arial, sans-serif;
+            background-image: url('background.png');
+            background-size: cover;
+    background-repeat: no-repeat;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            text-align: center;
+        }
+                   
+
+        h1 {
+            color: white;
+            font-size: 36px;
+            font-family : 'stencil';
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 18px;
+            margin: 10px;
+            cursor: pointer;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        #scoreboard {
+            margin-top: 20px;
+            font-size: 24px;
+            color: White;
+        }
+        #result {
+            margin-top: 20px;
+            font-size: 36px;
+            color: #333;
+            font-weight: bold;
+        }
+        #computerChoice {
+            font-size: 18px;
+            color: white;
+            margin-top: 10px;
+        }
+        @keyframes shake {
+            0% { transform: rotate(0deg); }
+            25% { transform: rotate(5deg); }
+            50% { transform: rotate(-5deg); }
+            75% { transform: rotate(3deg); }
+            100% { transform: rotate(0deg); }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>ROCK PAPER SCISSORS <br> SHOWDOWN</h1>
+    <button value="rock" onclick="playGame('rock')">Rock</button>
+    <button value="paper" onclick="playGame('paper')">Paper</button>
+    <button value="scissors" onclick="playGame('scissors')">Scissors</button>
+    <div id="scoreboard">Score: <span id="playerScore">0</span> - <span id="computerScore">0</span></div>
+    <div id="result"></div>
+    <div id="computerChoice"></div>
+</div>
+
+<script>
+    let playerScore = 0;
+    let computerScore = 0;
+
+    function playGame(playerChoice) {
+        const choices = ['rock', 'paper', 'scissors'];
+        const computerChoice = choices[Math.floor(Math.random() * choices.length)];
+
+        let result;
+        if (playerChoice === computerChoice) {
+            result = "Tie!";
+        } else if (
+            (playerChoice === 'rock' && computerChoice === 'scissors') ||
+            (playerChoice === 'paper' && computerChoice === 'rock') ||
+            (playerChoice === 'scissors' && computerChoice === 'paper')
+        ) {
+            result = "You win!";
+            playerScore++;
+        } else {
+            result = "You lose!";
+            computerScore++;
+        }
+
+        document.getElementById('result').innerText = result;
+        document.getElementById('result').style.color = (result === "You win!") ? "green" : (result === "Tie!") ? "black" : "red";
+        document.getElementById('playerScore').innerText = playerScore;
+        document.getElementById('computerScore').innerText = computerScore;
+        document.getElementById('computerChoice').innerText = "Computer chose: " + computerChoice;
+
+        animateChoice(playerChoice);
+    }
+
+    function animateChoice(playerChoice) {
+        const playerButton = document.querySelector('button[value="' + playerChoice + '"]');
+        playerButton.style.animation = 'shake 0.5s ease';
+
+        setTimeout(() => {
+            playerButton.style.animation = '';
+        }, 1000);
+    }
+</script>
+
+</body>
+</html>
